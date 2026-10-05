@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetData : ScriptableObject
 {
-    [field: SerializeField] private ModuleSet Set { get; set; }
+    [field: SerializeField] public ModuleSet Set { get; private set; }
     
-    [field: SerializeField] private ConditionnalSubstat[] SetBonus { get; set; }
+    [field: SerializeField] public ConditionnalSubstat[] SetBonus { get; private set; }
 }
