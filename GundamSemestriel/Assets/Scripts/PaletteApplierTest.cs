@@ -21,8 +21,13 @@ public class PaletteApplierTest : MonoBehaviour
 
     public void ApplyPalette(ColorPaletteData palette)
     {
-        if (palette == null) return;
         Init();
+
+        if (palette == null) 
+        {
+            meshRenderer.SetPropertyBlock(null);
+            return;
+        }
 
         meshRenderer.GetPropertyBlock(propertyBlock);
 
@@ -39,8 +44,6 @@ public class PaletteApplierTest : MonoBehaviour
         if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode) return;
 #endif
         
-        Init();
-        if (testPalette != null)
-            ApplyPalette(testPalette);
+        ApplyPalette(testPalette);
     }
 }

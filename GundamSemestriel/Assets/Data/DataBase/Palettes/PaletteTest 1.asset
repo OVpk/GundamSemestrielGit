@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorPaletteData
   <colorA>k__BackingField: {r: 0, g: 0.7388153, b: 1, a: 0}
   <colorB>k__BackingField: {r: 1, g: 0, b: 0.13757896, a: 0}
-  <colorC>k__BackingField: {r: 0.19421315, g: 1, b: 0, a: 0}
+  <colorC>k__BackingField: {r: 1, g: 0.79692596, b: 0, a: 0}

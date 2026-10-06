@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea2cfc32b888064bb15809078d8214a, type: 3}
   m_Name: PaletteTest
   m_EditorClassIdentifier: Assembly-CSharp::ColorPaletteData
-  <colorA>k__BackingField: {r: 0.2003901, g: 1, b: 0, a: 0}
-  <colorB>k__BackingField: {r: 0.9923129, g: 0, b: 1, a: 0}
-  <colorC>k__BackingField: {r: 0, g: 0.11277914, b: 1, a: 0}
+  <colorA>k__BackingField: {r: 0.5529971, g: 0, b: 1, a: 0}
+  <colorB>k__BackingField: {r: 1, g: 0.48200065, b: 0, a: 0}
+  <colorC>k__BackingField: {r: 0, g: 1, b: 0.8148835, a: 0}
