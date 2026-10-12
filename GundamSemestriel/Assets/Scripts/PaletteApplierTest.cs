@@ -6,6 +6,11 @@ public class PaletteApplierTest : MonoBehaviour
     private static readonly int ColorA_ID = Shader.PropertyToID("_ColorA");
     private static readonly int ColorB_ID = Shader.PropertyToID("_ColorB");
     private static readonly int ColorC_ID = Shader.PropertyToID("_ColorC");
+    private static readonly int ColorD_ID = Shader.PropertyToID("_ColorD");
+    private static readonly int ColorE_ID = Shader.PropertyToID("_ColorE");
+    private static readonly int ColorF_ID = Shader.PropertyToID("_ColorF");
+    private static readonly int ColorG_ID = Shader.PropertyToID("_ColorG");
+    private static readonly int ColorH_ID = Shader.PropertyToID("_ColorH");
     
     [SerializeField] private ColorPaletteData testPalette;
     private Renderer meshRenderer;
@@ -25,17 +30,22 @@ public class PaletteApplierTest : MonoBehaviour
 
         if (palette == null) 
         {
-            meshRenderer.SetPropertyBlock(null);
+            meshRenderer.SetPropertyBlock(null, 0);
             return;
         }
 
-        meshRenderer.GetPropertyBlock(propertyBlock);
+        meshRenderer.GetPropertyBlock(propertyBlock, 0);
 
         propertyBlock.SetColor(ColorA_ID, palette.colorA);
         propertyBlock.SetColor(ColorB_ID, palette.colorB);
         propertyBlock.SetColor(ColorC_ID, palette.colorC);
+        propertyBlock.SetColor(ColorD_ID, palette.colorD);
+        propertyBlock.SetColor(ColorE_ID, palette.colorE);
+        propertyBlock.SetColor(ColorF_ID, palette.colorF);
+        propertyBlock.SetColor(ColorG_ID, palette.colorG);
+        propertyBlock.SetColor(ColorH_ID, palette.colorH);
 
-        meshRenderer.SetPropertyBlock(propertyBlock);
+        meshRenderer.SetPropertyBlock(propertyBlock, 0);
     }
 
     private void OnValidate()
