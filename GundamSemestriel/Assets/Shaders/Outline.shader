@@ -2,7 +2,7 @@ Shader "Custom/Outline"
 {
     Properties
     {
-        _OutlineWidth ("Outline Width", Range(0.0, 0.05)) = 0.005
+        _OutlineWidth ("Outline Width", Range(0.0, 0.1)) = 0.005
         _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
     }
 
@@ -13,6 +13,7 @@ Shader "Custom/Outline"
         Pass
         {
             Tags { "LightMode"="SRPDefaultUnlit" }
+            
             Cull Front
 
             HLSLPROGRAM
@@ -24,6 +25,7 @@ Shader "Custom/Outline"
             {
                 float4 positionOS : POSITION;
                 float3 normalOS : NORMAL;
+                float4 color    : COLOR; 
             };
             
             struct Varyings
@@ -38,14 +40,15 @@ Shader "Custom/Outline"
             {
                 Varyings output;
                 
-                float4 posCS = TransformObjectToHClip(input.positionOS.xyz);
-
-                float3 normWS = TransformObjectToWorldNormal(input.normalOS);
-                float3 normCS = TransformWorldToHClipDir(normWS);
-
-                posCS.xy += normalize(normCS.xy) * _OutlineWidth * posCS.w;
-
-                output.positionCS = posCS;
+                float3 decodedNormal = input.color.rgb * 2.0 - 1.0;
+                
+                float3 smoothNormalOS = float3(-decodedNormal.x, decodedNormal.y, decodedNormal.z);
+                
+                float thickness = input.color.a * _OutlineWidth;
+                float3 inflatedPositionOS = input.positionOS.xyz + (smoothNormalOS * thickness);
+                
+                output.positionCS = TransformObjectToHClip(inflatedPositionOS);
+                
                 return output;
             }
             
