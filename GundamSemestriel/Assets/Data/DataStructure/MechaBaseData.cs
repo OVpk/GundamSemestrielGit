@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public class MechaBaseData : ScriptableObject
+[CreateAssetMenu(menuName = "Data/Mecha/Base")]
+public class MechaBaseData : EntityBaseData
 {
     [field: SerializeField] public SetData Set { get; private set; }
-    
-    [Header("Global Stats")]
-    [field: SerializeField] public int Hp { get; private set; }
-    [field: SerializeField] public int Attack { get; private set; }
-    [field: SerializeField] public int Def { get; private set; }
-    [field: SerializeField] public int Speed { get; private set; }
-    [field: SerializeField] public int Crit { get; private set; }
-    
-    
-
 }
