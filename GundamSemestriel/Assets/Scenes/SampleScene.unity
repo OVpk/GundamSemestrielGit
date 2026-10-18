@@ -558,6 +558,97 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaletteApplierTest
   testPalette: {fileID: 0}
+--- !u!1 &1731575742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1731575746}
+  - component: {fileID: 1731575745}
+  - component: {fileID: 1731575744}
+  - component: {fileID: 1731575743}
+  m_Layer: 0
+  m_Name: Mechas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1731575743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731575742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c547375aad83c4cb5cfb262cdbbb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MechaTestProto
+  baseData: {fileID: 11400000, guid: 9814afdbf1c52ed4887e154c52d0797d, type: 2}
+  modules:
+  - {fileID: 11400000, guid: e3a0cfdbe4bd91e4cac35480a7b17b31, type: 2}
+  - {fileID: 11400000, guid: 608be74339592084fa4e2fd23fe7cd56, type: 2}
+  - {fileID: 11400000, guid: dfc5420b6a2044a4e95720be80f8ff27, type: 2}
+  - {fileID: 11400000, guid: 810a3cb2d0b2bc140b89fd1d9a3ed831, type: 2}
+  - {fileID: 11400000, guid: 7bca6ab8235de6c4aba4c8518d66baba, type: 2}
+--- !u!114 &1731575744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731575742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c547375aad83c4cb5cfb262cdbbb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MechaTestProto
+  baseData: {fileID: 11400000, guid: c986863ac25186e468e10b07e4e4bb93, type: 2}
+  modules:
+  - {fileID: 11400000, guid: 6d2c9ada170df344d8fe7012daa82c26, type: 2}
+  - {fileID: 11400000, guid: ba350187bf7fd3949a230407f89ad766, type: 2}
+  - {fileID: 11400000, guid: 872cf7e11409fca4db7f0805c7b875aa, type: 2}
+  - {fileID: 11400000, guid: 111cead5dc3ccbc4ab6c13eda563ac2a, type: 2}
+  - {fileID: 11400000, guid: dd13247dea8e6bb4a9848a9abd2fcd0a, type: 2}
+--- !u!114 &1731575745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731575742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c547375aad83c4cb5cfb262cdbbb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MechaTestProto
+  baseData: {fileID: 11400000, guid: d991ccaa3cf49bc44b3d831fdbe525dd, type: 2}
+  modules:
+  - {fileID: 11400000, guid: e3a0cfdbe4bd91e4cac35480a7b17b31, type: 2}
+  - {fileID: 11400000, guid: 608be74339592084fa4e2fd23fe7cd56, type: 2}
+  - {fileID: 11400000, guid: 872cf7e11409fca4db7f0805c7b875aa, type: 2}
+  - {fileID: 11400000, guid: f0443080a433c7f4788f76c2c2b8053c, type: 2}
+  - {fileID: 11400000, guid: 94e31f7dc637efe47a650ead6602b462, type: 2}
+--- !u!4 &1731575746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731575742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.56917, y: 1185.8275, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -566,3 +657,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1185794828}
+  - {fileID: 1731575746}
