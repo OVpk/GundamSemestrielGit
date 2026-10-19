@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FightEntity
 {
-    public event Action OnDeath;
+    public event Action<FightEntity> OnDeath;
     public bool IsDead => CurrentHp <= 0;
     public EntityRuntimeData BaseStats { get; private set; }
     
@@ -41,6 +42,23 @@ public class FightEntity
         float result = (baseStatValue * (1f + percentSum / 100f)) + flatSum;
         return Mathf.Max(0, Mathf.RoundToInt(result));
     }
+    
+    public void AttackTarget(FightEntity target)
+    {
+        if (IsDead || target == null || target.IsDead) return;
+
+        bool isCrit = Random.Range(0f, 100f) < CritRate;
+
+        float rawDamage = Attack;
+        if (isCrit)
+        {
+            rawDamage *= (CritDamage / 100f);
+        }
+
+        int finalDamage = Mathf.RoundToInt(rawDamage);
+
+        target.TakeDamage(finalDamage);
+    }
 
     #region PV
     
@@ -60,7 +78,7 @@ public class FightEntity
         CurrentHp = Mathf.Min(BaseStats.Hp, CurrentHp + amount);
     }
 
-    private void Die() => OnDeath?.Invoke();
+    private void Die() => OnDeath?.Invoke(this);
     
     #endregion
 
