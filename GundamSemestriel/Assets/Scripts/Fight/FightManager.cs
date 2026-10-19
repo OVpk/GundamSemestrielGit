@@ -75,11 +75,27 @@ public class FightManager : MonoBehaviour
 
     private void HandleEnemyDeath(FightEntity deadEntity)
     {
+        for (int i = 0; i < EnemyTeam.Length; i++)
+        {
+            if (EnemyTeam[i] == deadEntity)
+            {
+                if (enemyVisuals[i] != null) 
+                    enemyVisuals[i].SetActive(false);
+                break;
+            }
+        }
+
         if (EnemyTeam[currentTargetEnemyIndex] == deadEntity)
         {
+            if (isManualFocusActive)
+            {
+                isManualFocusActive = false;
+                if (focusIndicator != null) focusIndicator.SetActive(false);
+            }
+
             SelectRandomTarget(EnemyTeam, ref currentTargetEnemyIndex);
         }
-        
+    
         CheckBattleStatus();
     }
 
@@ -101,8 +117,12 @@ public class FightManager : MonoBehaviour
 
             if (!isBattleActive) yield break;
 
-            SelectRandomTarget(EnemyTeam, ref currentTargetEnemyIndex);
             SelectRandomTarget(PlayerTeam, ref currentTargetPlayerIndex);
+            
+            if (!isManualFocusActive)
+            {
+                SelectRandomTarget(EnemyTeam, ref currentTargetEnemyIndex);
+            }
         }
     }
 
@@ -186,4 +206,28 @@ public class FightManager : MonoBehaviour
         }
         return false;
     }
+    
+    [SerializeField] private GameObject focusIndicator;
+    [SerializeField] private Transform[] focusPositions = new Transform[3];
+    
+    private bool isManualFocusActive = false;
+
+    public void SetManualEnemyTarget(int index)
+    {
+        if (EnemyTeam[index] == null || EnemyTeam[index].IsDead) return;
+
+        isManualFocusActive = true;
+        currentTargetEnemyIndex = index;
+
+        if (focusIndicator != null && focusPositions.Length > index)
+        {
+            focusIndicator.transform.position = focusPositions[index].position;
+            focusIndicator.SetActive(true);
+        }
+    }
+    
+    [Header("Visuels Ennemis")]
+    [SerializeField] private GameObject[] enemyVisuals = new GameObject[3];
+    
+    
 }
