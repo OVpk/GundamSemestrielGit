@@ -1,9 +1,9 @@
 public enum Stat
 {
     Hp,
-    AttackTick,
     Attack,
     Def,
+    Speed,
     CritRate,
     CritDamage
 }
