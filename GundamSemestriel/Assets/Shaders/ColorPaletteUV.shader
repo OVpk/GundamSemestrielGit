@@ -100,4 +100,6 @@ Shader "Custom/ColorPaletteUV"
             ENDHLSL
         }
     }
+
+    CustomEditor "PaletteMaterialEditor"
 }
