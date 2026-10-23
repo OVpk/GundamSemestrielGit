@@ -52,12 +52,15 @@ Shader "Custom/ColorPaletteUV"
             };
 
             sampler2D _BaseGrayscale;
+            
+            CBUFFER_START(UnityPerMaterial)
             float4 _ColorA, _ColorB, _ColorC, _ColorD;
             float4 _ColorE, _ColorF, _ColorG, _ColorH;
             
             float4 _ShadowTint;
             float _ShadowThreshold;
             float _ShadowSmoothness;
+            CBUFFER_END
             
             Varyings vert (Attributes input)
             {

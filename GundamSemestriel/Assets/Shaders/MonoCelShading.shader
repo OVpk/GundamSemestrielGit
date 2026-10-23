@@ -41,11 +41,14 @@ Shader "Custom/MonoCelShading"
             };
 
             sampler2D _MainTex;
+            
+            CBUFFER_START(UnityPerMaterial)
             float4 _BaseColor;
 
             float4 _ShadowTint;
             float _ShadowThreshold;
             float _ShadowSmoothness;
+            CBUFFER_END
 
             Varyings vert (Attributes input)
             {
