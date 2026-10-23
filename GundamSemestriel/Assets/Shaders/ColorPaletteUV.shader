@@ -75,16 +75,9 @@ Shader "Custom/ColorPaletteUV"
 
                 int index = (int)floor(input.uv1.x * 8.0);
                 index = clamp(index, 0, 7);
-
-                float4 paletteColor;
-                if (index == 0) paletteColor = _ColorA;
-                else if (index == 1) paletteColor = _ColorB;
-                else if (index == 2) paletteColor = _ColorC;
-                else if (index == 3) paletteColor = _ColorD;
-                else if (index == 4) paletteColor = _ColorE;
-                else if (index == 5) paletteColor = _ColorF;
-                else if (index == 6) paletteColor = _ColorG;
-                else paletteColor = _ColorH;
+                
+                float4 palette[8] = { _ColorA, _ColorB, _ColorC, _ColorD, _ColorE, _ColorF, _ColorG, _ColorH };
+                float4 paletteColor = palette[index];
                 
                 float3 baseColor = (paletteColor * grayscale).rgb;
                 
