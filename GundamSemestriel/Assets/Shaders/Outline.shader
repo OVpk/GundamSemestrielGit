@@ -42,7 +42,7 @@ Shader "Custom/Outline"
                 
                 float3 decodedNormal = input.color.rgb * 2.0 - 1.0;
                 
-                float3 smoothNormalOS = float3(-decodedNormal.x, decodedNormal.y, decodedNormal.z);
+                float3 smoothNormalOS = float3(-decodedNormal.x, decodedNormal.z, -decodedNormal.y);
                 
                 float thickness = input.color.a * _OutlineWidth;
                 float3 inflatedPositionOS = input.positionOS.xyz + (smoothNormalOS * thickness);
