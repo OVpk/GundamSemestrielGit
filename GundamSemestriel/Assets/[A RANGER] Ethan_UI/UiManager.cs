@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -10,9 +11,12 @@ public class UiManager : MonoBehaviour
     [SerializeField] private MenuState menuState = MenuState.MechaModificator; 
     [SerializeField] private List<MenuState> menuOrder; 
     
-    [Header("Menu")]
+    [Header("Menus")]
     [SerializeField] private RectTransform allMenuRectTransform;
     [SerializeField] private float menuSwitchAnimationTime = 1f;
+    [SerializeField] private Animation doorAnim;
+    [SerializeField] private float doorAnimChangeTime = 1f;
+    [SerializeField] private GameObject missionMenu;
     
     [Space(20)]
     [Header("Stats Drawer")]
@@ -50,6 +54,8 @@ public class UiManager : MonoBehaviour
     public void OpenGachaMenu() => SwitchMenu(MenuState.Gacha);
     public void OpenMechaMenu() => SwitchMenu(MenuState.MechaModificator);
     public void OpenInventoryMenu() => SwitchMenu(MenuState.Inventory);
+    public void OpenMissionMenu() => StartCoroutine(WaitDoorAnim(missionMenu, true));
+    public void CloseMissionMenu() => StartCoroutine(WaitDoorAnim(missionMenu, false));
     
     private void SwitchMenu(MenuState state)
     {
@@ -64,6 +70,13 @@ public class UiManager : MonoBehaviour
         allMenuRectTransform.DOAnchorPos(position, menuSwitchAnimationTime).SetEase(Ease.Linear);
         
         menuState = state;
+    }
+
+    private IEnumerator WaitDoorAnim(GameObject nextMenu, bool setActive)
+    {
+        doorAnim.Play();
+        yield return new WaitForSeconds(doorAnimChangeTime);
+        nextMenu.SetActive(setActive);
     }
 }
 
