@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 
 public class EnemyTouchZone : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private FightManager fightManager;
-    [SerializeField] private int enemySlotIndex;
+    public FightManager fightManager;
+    public int enemySlotIndex;
 
     public void OnPointerClick(PointerEventData eventData)
     {

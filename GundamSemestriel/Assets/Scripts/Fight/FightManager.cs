@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
+    public static event Action OnFMReady;
+    
     [SerializeField] private MechaTestProto[] playerMechas = new MechaTestProto[3];
     [SerializeField] private EnemyData[] enemyDatas = new EnemyData[3];
     
@@ -29,6 +33,8 @@ public class FightManager : MonoBehaviour
 
         SelectRandomTarget(EnemyTeam, ref currentTargetEnemyIndex);
         SelectRandomTarget(PlayerTeam, ref currentTargetPlayerIndex);
+        
+        OnFMReady?.Invoke();
     }
 
     private void InitPlayerTeam()
