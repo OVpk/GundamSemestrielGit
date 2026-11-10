@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class FightEntity
 {
     public event Action<FightEntity> OnDeath;
+    public event Action<FightEntity, int> OnDamaged;
     public bool IsDead => CurrentHp <= 0;
     public EntityRuntimeData BaseStats { get; private set; }
     
@@ -68,6 +69,8 @@ public class FightEntity
     
         CurrentHp = Mathf.Max(0, CurrentHp - actualDamage);
         
+        OnDamaged?.Invoke(this, actualDamage);
+        Debug.Log("ActualDamages " + actualDamage);
         if (IsDead)
             Die();
     }
