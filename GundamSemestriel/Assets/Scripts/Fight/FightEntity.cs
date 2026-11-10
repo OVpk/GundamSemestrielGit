@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class FightEntity
 {
     public event Action<FightEntity> OnDeath;
-    public event Action<FightEntity, int> OnDamaged;
+    public event Action<FightEntity, int, bool> OnDamaged; //ETHAN
     public bool IsDead => CurrentHp <= 0;
     public EntityRuntimeData BaseStats { get; private set; }
     
@@ -48,13 +48,9 @@ public class FightEntity
     {
         if (IsDead || target == null || target.IsDead) return;
 
-        bool isCrit = Random.Range(0f, 100f) < CritRate;
-
         float rawDamage = Attack;
-        if (isCrit)
-        {
-            rawDamage *= (CritDamage / 100f);
-        }
+        
+        rawDamage *= 245;//ETHAN
 
         int finalDamage = Mathf.RoundToInt(rawDamage);
 
@@ -65,12 +61,22 @@ public class FightEntity
     
     public void TakeDamage(int amount)
     {
-        int actualDamage = Mathf.Max(0, amount - Def);
+        //ETHAN
+        int actualDamage = Mathf.RoundToInt(Mathf.Max(0, amount/((6*Def/1)+80)-12.5f)); //replace /1 by /percAr 
+        
+        bool isCrit = Random.Range(0f, 100f) < CritRate;
+        if (isCrit)
+        {
+            actualDamage *= (CritDamage / 100);
+        }
+        //ETHAN
     
         CurrentHp = Mathf.Max(0, CurrentHp - actualDamage);
         
-        OnDamaged?.Invoke(this, actualDamage);
-        Debug.Log("ActualDamages " + actualDamage);
+        OnDamaged?.Invoke(this, actualDamage, isCrit); //ETHAN
+        
+        Debug.Log("ActualDamages " + actualDamage);//ETHAN
+        
         if (IsDead)
             Die();
     }

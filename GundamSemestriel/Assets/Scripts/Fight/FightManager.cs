@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
-    public static event Action OnFMReady;
+    public static event Action OnFMReady; //ETHAN
     
     [SerializeField] private MechaTestProto[] playerMechas = new MechaTestProto[3];
     [SerializeField] private EnemyData[] enemyDatas = new EnemyData[3];
@@ -34,7 +34,7 @@ public class FightManager : MonoBehaviour
         SelectRandomTarget(EnemyTeam, ref currentTargetEnemyIndex);
         SelectRandomTarget(PlayerTeam, ref currentTargetPlayerIndex);
         
-        OnFMReady?.Invoke();
+        OnFMReady?.Invoke(); //ETHAN
     }
 
     private void InitPlayerTeam()
@@ -67,6 +67,17 @@ public class FightManager : MonoBehaviour
                 EnemyTeam[i].OnDeath += HandleEnemyDeath;
             }
         }
+    }
+    
+    //ETHAN
+    public FightEntity GetPlayerEntity(MechaTestProto mecha)
+    {
+        for (int i = 0; i < playerMechas.Length; i++)
+        {
+            if (playerMechas[i] == mecha)
+                return PlayerTeam[i];
+        }
+        return null;
     }
 
     private void HandlePlayerDeath(FightEntity deadEntity)

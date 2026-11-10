@@ -1,3 +1,4 @@
+//ETHAN
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,12 @@ public class LifeBar : MonoBehaviour
     [SerializeField] private Image back;
     [SerializeField] private Image lifeBar;
     [SerializeField] private Image damageBar;
-    [SerializeField] private EnemyTouchZone _enemy;
+    [SerializeField] private DamagesVisualizer damagesVisualizer;
+    
+    [SerializeField] private FightManager fightManager;
+    [SerializeField] private bool isEnemy;
+    [SerializeField] private MechaTestProto mecha;
+    [SerializeField] private EnemyTouchZone enemy;
 
     [Header("Colors")]
     [SerializeField] private Color backColor;
@@ -29,35 +35,55 @@ public class LifeBar : MonoBehaviour
 
     private void Awake()
     {
-        if (_enemy == null)
-            _enemy = GetComponentInParent<EnemyTouchZone>();
+        if (isEnemy && enemy == null) enemy = GetComponentInParent<EnemyTouchZone>();
+        if (damagesVisualizer == null) damagesVisualizer = GetComponentInChildren<DamagesVisualizer>();
+        
+        FightManager.OnFMReady += LinkEntity;
     }
 
     private void Start()
     {
         InitColors();
-
-        FightManager.OnFMReady += LinkEntity;
-
         lifeBar.fillAmount = 1f;
         damageBar.fillAmount = 1f;
     }
 
     private void LinkEntity()
     {
-        _entity = _enemy.fightManager.EnemyTeam[_enemy.enemySlotIndex];
-        if (_entity == null) return;
-
+        if (_entity != null)
+            _entity.OnDamaged -= HandleDamaged;
+        
+        if (fightManager == null && enemy != null) fightManager = enemy.fightManager;
+        if (fightManager == null)
+        {
+            Debug.LogWarning("[LifeBar] no fight manager", this);
+            return;
+        } 
+        
+        if (isEnemy)
+        {
+            _entity = fightManager.EnemyTeam[enemy.enemySlotIndex];
+        }
+        else
+        {
+            _entity = fightManager.GetPlayerEntity(mecha);
+        }
+        
         _maxLife = _entity.BaseStats.Hp;
         _entity.OnDamaged += HandleDamaged;
+
+        lifeBar.fillAmount = _entity.CurrentHp / _maxLife;
+        damageBar.fillAmount = lifeBar.fillAmount;
     }
 
     private void OnDestroy()
     {
+        FightManager.OnFMReady -= LinkEntity;
+
         if (_entity != null)
             _entity.OnDamaged -= HandleDamaged;
-        
-        FightManager.OnFMReady -= LinkEntity;
+
+        damageBar.DOKill();
     }
 
     private void InitColors()
@@ -67,15 +93,17 @@ public class LifeBar : MonoBehaviour
         if (damageBar != null) damageBar.color = damagesBarColor;
     }
 
-    private void HandleDamaged(FightEntity entity, int damage)
+    private void HandleDamaged(FightEntity entity, int damage, bool isCrit)
     {
         float ratio = (float)entity.CurrentHp / _maxLife;
 
         lifeBar.fillAmount = ratio;
 
+        if (damagesVisualizer != null)
+            damagesVisualizer.DisplayDamages(damage, isCrit);
+
         damageBar.DOKill();
         damageBar.DOFillAmount(ratio, damagesLifeAnimTime).SetDelay(damagesLifeAnimDelay);
-        //Debug.Log("took damages " + damage);
     }
 
     // DEBUG
