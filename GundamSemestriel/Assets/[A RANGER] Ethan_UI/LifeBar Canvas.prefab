@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 7138627677088790606}
   - component: {fileID: 7922132684662066413}
   - component: {fileID: 3558782526439127087}
+  - component: {fileID: 7245752186180979674}
   m_Layer: 5
   m_Name: LifeBar Canvas
   m_TagString: Untagged
@@ -141,7 +142,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3232318527934134398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.13050222, y: 0.018988812, z: 0.0024999236, w: 0.99126303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -233,13 +234,28 @@ MonoBehaviour:
   back: {fileID: 2048885377931228114}
   lifeBar: {fileID: 8008481044225211324}
   damageBar: {fileID: 3239184803816583236}
-  enemy: {fileID: 0}
   damagesVisualizer: {fileID: 0}
+  fightManager: {fileID: 0}
+  isEnemy: 0
+  mecha: {fileID: 0}
+  enemy: {fileID: 0}
   backColor: {r: 1, g: 1, b: 1, a: 1}
   lifeBarColor: {r: 1, g: 0, b: 0, a: 1}
   damagesBarColor: {r: 1, g: 0.34065935, b: 0, a: 1}
   damagesLifeAnimTime: 1
   damagesLifeAnimDelay: 0.25
+--- !u!114 &7245752186180979674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232318527934134398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc668efac76c648aaa6d034145a5f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
 --- !u!1 &7865876950012504471
 GameObject:
   m_ObjectHideFlags: 0

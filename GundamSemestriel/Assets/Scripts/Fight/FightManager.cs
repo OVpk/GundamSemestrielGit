@@ -47,7 +47,7 @@ public class FightManager : MonoBehaviour
                     PlayerTeam[i].OnDeath -= HandlePlayerDeath;
 
                 var runtimeData = new EntityRuntimeData(playerMechas[i].BaseData, playerMechas[i].Modules);
-                PlayerTeam[i] = new FightEntity(runtimeData);
+                PlayerTeam[i] = new FightEntity(runtimeData, playerMechas[i].name);
                 
                 PlayerTeam[i].OnDeath += HandlePlayerDeath;
             }
@@ -63,7 +63,7 @@ public class FightManager : MonoBehaviour
                 if (EnemyTeam[i] != null) 
                     EnemyTeam[i].OnDeath -= HandleEnemyDeath;
 
-                EnemyTeam[i] = new FightEntity(new EntityRuntimeData(enemyDatas[i]));
+                EnemyTeam[i] = new FightEntity(new EntityRuntimeData(enemyDatas[i]), $"{enemyDatas[i].name} (slot {i})");
                 EnemyTeam[i].OnDeath += HandleEnemyDeath;
             }
         }
