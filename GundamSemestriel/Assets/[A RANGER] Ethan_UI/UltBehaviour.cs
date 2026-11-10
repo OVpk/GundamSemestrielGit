@@ -39,6 +39,6 @@ public class UltBehaviour : MonoBehaviour
 
     private void CallUlt(MechaTestProto mechaTestProto)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Implement ult");
     }
 }

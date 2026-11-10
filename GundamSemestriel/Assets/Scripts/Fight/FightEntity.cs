@@ -52,10 +52,11 @@ public class FightEntity
         if (IsDead || target == null || target.IsDead) return;
 
         float rawDamage = Attack;
+        Debug.Log($"[Combat] {Name} attaque {target.Name} (brut : {rawDamage})");
+        
         rawDamage *= 245;//ETHAN
-
         int finalDamage = Mathf.RoundToInt(rawDamage);
-        Debug.Log($"[Combat] {Name} attaque {target.Name} (brut : {finalDamage})");
+        
         target.TakeDamage(finalDamage);
     }
 
@@ -64,7 +65,7 @@ public class FightEntity
     public void TakeDamage(int amount)
     {
         //ETHAN
-        int actualDamage = Mathf.RoundToInt(Mathf.Max(0, amount/((6*Def/1)+80)-12.5f)); //replace /1 by /percAr 
+        int actualDamage = Mathf.RoundToInt(Mathf.Max(1, amount/((6*Def/1)+80)-12.5f)); //replace /1 by /percAr 
         
         bool isCrit = Random.Range(0f, 100f) < CritRate;
         if (isCrit)
