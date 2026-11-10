@@ -33,8 +33,10 @@ Shader "Custom/Outline"
                 float4 positionCS : SV_POSITION;
             };
             
+            CBUFFER_START(UnityPerMaterial)
             float _OutlineWidth;
             float4 _OutlineColor;
+            CBUFFER_END
             
             Varyings vert(Attributes input)
             {
@@ -42,7 +44,7 @@ Shader "Custom/Outline"
                 
                 float3 decodedNormal = input.color.rgb * 2.0 - 1.0;
                 
-                float3 smoothNormalOS = float3(-decodedNormal.x, decodedNormal.y, decodedNormal.z);
+                float3 smoothNormalOS = float3(-decodedNormal.x, decodedNormal.z, -decodedNormal.y);
                 
                 float thickness = input.color.a * _OutlineWidth;
                 float3 inflatedPositionOS = input.positionOS.xyz + (smoothNormalOS * thickness);
