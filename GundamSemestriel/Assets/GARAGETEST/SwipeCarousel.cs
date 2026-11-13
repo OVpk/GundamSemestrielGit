@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SwipeCarousel : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    public event Action<int> OnItemClicked;
+
     [Header("Configuration des Prefabs 3D")]
     public List<GameObject> prefabs; 
 
@@ -37,6 +40,9 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private GameObject currentRight;
     private bool isAnimating = false;
 
+    // Empêche la création de doublons si on a déjà chargé les prefabs via un autre script
+    private bool hasBeenInitialized = false; 
+
     private Vector2 startTouchPosition;
     private float startTouchTime;
 
@@ -44,8 +50,35 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (spawnContainer == null) spawnContainer = this.transform;
         
+        // Si le script GarageManager a déjà initialisé le carousel, on bloque le Start
+        if (hasBeenInitialized) return; 
+
         if (prefabs == null || prefabs.Count == 0) return;
+        
         InitializeCarousel();
+    }
+    
+    // Cette méthode est appelée INSTANTANÉMENT quand on clique/touche l'écran
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (isAnimating) return;
+        
+        // On enregistre la position initiale ici, que ce soit pour un clic ou un swipe !
+        startTouchPosition = eventData.position;
+        startTouchTime = Time.time;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isAnimating) return;
+
+        // On vérifie que c'est bien un clic et pas la fin d'un long swipe
+        float distance = Vector2.Distance(startTouchPosition, eventData.position);
+        if (distance < minSwipeDistance)
+        {
+            // On crie l'index au GarageManager
+            OnItemClicked?.Invoke(currentIndex);
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -57,11 +90,15 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        // Obligatoire de laisser cette méthode vide pour que les interfaces de Drag fonctionnent
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         if (isAnimating) return;
+
+        // On bloque le swipe s'il y a 1 ou 0 objet pour éviter un plantage
+        if (prefabs == null || prefabs.Count <= 1) return;
 
         float swipeDistance = eventData.position.x - startTouchPosition.x;
         float swipeDuration = Time.time - startTouchTime;
@@ -72,8 +109,6 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             if (Mathf.Abs(swipeDistance) >= minSwipeDistance)
             {
-                Debug.Log($"Swipe détecté ! Vitesse : {swipeSpeed} pixels/seconde");
-                
                 bool isSwipingRight = swipeDistance > 0;
                 if (invertSwipeDirection) isSwipingRight = !isSwipingRight;
 
@@ -91,6 +126,8 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     
     private void InitializeCarousel()
     {
+        hasBeenInitialized = true; 
+
         currentCenter = SpawnPrefab(currentIndex, centerPos, normalScale);
         currentLeft = SpawnPrefab(GetWrappedIndex(currentIndex - 1), leftPos, normalScale);
         currentRight = SpawnPrefab(GetWrappedIndex(currentIndex + 1), rightPos, normalScale);
@@ -98,7 +135,7 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private int GetWrappedIndex(int index)
     {
-        if (index < 0) return prefabs.Count - 1;
+        if (index < 0) return prefabs.Count - 1; 
         if (index >= prefabs.Count) return 0;
         return index;
     }
@@ -106,13 +143,9 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private GameObject SpawnPrefab(int index, Vector3 localPosition, Vector3 scale)
     {
         GameObject obj = Instantiate(prefabs[index], spawnContainer);
-        
         obj.transform.localPosition = localPosition;
-        
         obj.transform.localRotation = Quaternion.identity;
-        
         obj.transform.localScale = scale;
-        
         return obj;
     }
 
@@ -178,14 +211,14 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else if (direction == -1)
         {
-            currentIndex = GetWrappedIndex(currentIndex - 1);
+            currentIndex = GetWrappedIndex(currentIndex - 1); 
             itemToDestroy = oldRight;
             
             StartCoroutine(MoveAndScale(oldRight, outRightPos, hiddenScale, true));
             StartCoroutine(MoveAndScale(oldCenter, rightPos, normalScale, false));
             StartCoroutine(MoveAndScale(oldLeft, centerPos, normalScale, false));
 
-            newItem = SpawnPrefab(GetWrappedIndex(currentIndex - 1), outLeftPos, hiddenScale);
+            newItem = SpawnPrefab(GetWrappedIndex(currentIndex - 1), outLeftPos, hiddenScale); 
             StartCoroutine(MoveAndScale(newItem, leftPos, normalScale, false));
 
             currentRight = oldCenter;
@@ -197,4 +230,42 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         isAnimating = false;
     }
 
+    public void LoadNewPrefabs(List<GameObject> newPrefabs)
+    {
+        hasBeenInitialized = true; // On prévient le Start() de ne rien faire
+
+        StopAllCoroutines();
+        isAnimating = false;
+
+        // Détruit TOUS les enfants pour éviter les objets fantômes
+        foreach (Transform child in spawnContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        currentCenter = null;
+        currentLeft = null;
+        currentRight = null;
+
+        prefabs = newPrefabs;
+        currentIndex = 0;
+
+        if (prefabs != null && prefabs.Count > 0)
+        {
+            if (prefabs.Count == 1)
+            {
+                currentCenter = SpawnPrefab(0, centerPos, normalScale);
+            }
+            else if (prefabs.Count == 2)
+            {
+                currentCenter = SpawnPrefab(0, centerPos, normalScale);
+                currentRight = SpawnPrefab(1, rightPos, normalScale);
+                currentLeft = SpawnPrefab(1, leftPos, normalScale);
+            }
+            else
+            {
+                InitializeCarousel();
+            }
+        }
+    }
 }

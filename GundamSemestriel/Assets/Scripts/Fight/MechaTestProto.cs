@@ -3,10 +3,24 @@ using UnityEngine;
 public class MechaTestProto : MonoBehaviour
 {
     [SerializeField] private MechaBaseData baseData;
-    [SerializeField] private ModuleData[] modules = new ModuleData[5];
     
+    [Header("Modules")]
+    [SerializeField] private ModuleData headModule;
+    [SerializeField] private ModuleData leftArmModule;
+    [SerializeField] private ModuleData rightArmModule;
+    [SerializeField] private ModuleData leftLegModule;
+    [SerializeField] private ModuleData rightLegModule;
+
     public MechaBaseData BaseData => baseData;
-    public ModuleData[] Modules => modules;
+    
+    public ModuleData[] Modules => new ModuleData[] 
+    { 
+        headModule, 
+        leftArmModule, 
+        rightArmModule, 
+        leftLegModule, 
+        rightLegModule 
+    };
 
     public void DisplayCalculatedStats()
     {

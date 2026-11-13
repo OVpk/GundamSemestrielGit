@@ -1269,7 +1269,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 599949231}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadRightLeg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &599949231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,7 +1289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599949228}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1920,7 +1932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &746425823
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1947,6 +1959,72 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &802878116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802878118}
+  - component: {fileID: 802878117}
+  - component: {fileID: 802878119}
+  m_Layer: 0
+  m_Name: GarageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &802878117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802878116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfb7900b2e0b814c9a39e9951bc3326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GarageManager
+  inventory: {fileID: 11400000, guid: b5acf8e7048f4f64cbaa9f8db717ec13, type: 2}
+  carousel: {fileID: 1650828877}
+  uiBodyPart: {fileID: 746425822}
+--- !u!4 &802878118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802878116}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 307, y: 1060, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &802878119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802878116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c547375aad83c4cb5cfb262cdbbb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MechaTestProto
+  baseData: {fileID: 11400000, guid: 9814afdbf1c52ed4887e154c52d0797d, type: 2}
+  headModule: {fileID: 11400000, guid: f58ed281f263ed34c90bb1660332d774, type: 2}
+  leftArmModule: {fileID: 11400000, guid: c453d4dc0de84bd4fb220e5eeabdfdd0, type: 2}
+  rightArmModule: {fileID: 11400000, guid: 872cf7e11409fca4db7f0805c7b875aa, type: 2}
+  leftLegModule: {fileID: 11400000, guid: dd13247dea8e6bb4a9848a9abd2fcd0a, type: 2}
+  rightLegModule: {fileID: 11400000, guid: ea789ee556e0bbc40a960c5303320076, type: 2}
 --- !u!1 &845238472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2066,7 +2144,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 856456122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadLeftLeg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &856456122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2074,7 +2164,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856456119}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3553,7 +3643,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1545238024}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadLeftArm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1545238024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,7 +3663,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545238021}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4184,7 +4286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1650828876
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4216,10 +4318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff38d1f42e25f3c4ea41348eb5318da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwipeCarousel
-  prefabs:
-  - {fileID: 672739538125818459, guid: 0bcc62a1e035966448a8828fb3ea389d, type: 3}
-  - {fileID: 4556898139666410754, guid: 81380fc9a7b2bcf4eb1a9fa4384a155c, type: 3}
-  - {fileID: 4556898139666410754, guid: 81380fc9a7b2bcf4eb1a9fa4384a155c, type: 3}
+  prefabs: []
   spawnContainer: {fileID: 1192397488}
   centerPos: {x: 0, y: 0, z: -2}
   leftPos: {x: -3, y: 0, z: 0}
@@ -4375,7 +4474,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1700946340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadTorso
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1700946340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4383,7 +4494,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700946337}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4607,7 +4718,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1783077209}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadHead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1783077209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4615,7 +4738,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783077206}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4801,7 +4924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1813339446
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4872,7 +4995,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813339445}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5661,7 +5784,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2067026814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: LoadRightArm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2067026814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5669,7 +5804,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067026811}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5834,3 +5969,4 @@ SceneRoots:
   - {fileID: 1192397488}
   - {fileID: 1294330909}
   - {fileID: 329680475}
+  - {fileID: 802878118}

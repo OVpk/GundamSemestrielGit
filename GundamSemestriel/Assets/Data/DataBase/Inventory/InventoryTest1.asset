@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a787ba85ea47144b4a5e11334a34de, type: 3}
+  m_Name: InventoryTest1
+  m_EditorClassIdentifier: Assembly-CSharp::MechaInventory
+  torses:
+  - {fileID: 11400000, guid: c986863ac25186e468e10b07e4e4bb93, type: 2}
+  - {fileID: 11400000, guid: 9814afdbf1c52ed4887e154c52d0797d, type: 2}
+  tetes:
+  - {fileID: 11400000, guid: 6d2c9ada170df344d8fe7012daa82c26, type: 2}
+  - {fileID: 11400000, guid: f58ed281f263ed34c90bb1660332d774, type: 2}
+  brasGauches:
+  - {fileID: 11400000, guid: ba350187bf7fd3949a230407f89ad766, type: 2}
+  - {fileID: 11400000, guid: c453d4dc0de84bd4fb220e5eeabdfdd0, type: 2}
+  brasDroits:
+  - {fileID: 11400000, guid: 51cce564a10311a459e9cd78e461c78a, type: 2}
+  - {fileID: 11400000, guid: 872cf7e11409fca4db7f0805c7b875aa, type: 2}
+  jambesGauches:
+  - {fileID: 11400000, guid: 397bdfbf2339e8d4aa54f1cacc3b4b3b, type: 2}
+  - {fileID: 11400000, guid: dd13247dea8e6bb4a9848a9abd2fcd0a, type: 2}
+  jambesDroites:
+  - {fileID: 11400000, guid: 111cead5dc3ccbc4ab6c13eda563ac2a, type: 2}
+  - {fileID: 11400000, guid: ea789ee556e0bbc40a960c5303320076, type: 2}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c20112b5044148ba6f823a2915443, type: 3}
   m_Name: Mod_Head_Tank_1
   m_EditorClassIdentifier: Assembly-CSharp::ModuleData
+  prefab: {fileID: 1302269625691794530, guid: 87a26ab6eb43bbb469c810f4102d752b, type: 3}
   set: {fileID: 11400000, guid: 0aa8ee2476ebe4b4f98728d5ced38513, type: 2}
   <SubStats>k__BackingField:
   - <AdditiveType>k__BackingField: 0
