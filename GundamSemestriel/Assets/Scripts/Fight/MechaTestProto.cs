@@ -22,6 +22,39 @@ public class MechaTestProto : MonoBehaviour
         rightLegModule 
     };
 
+    public ScriptableObject GetEquippedPart(MechaPartType partType)
+    {
+        switch (partType)
+        {
+            case MechaPartType.Torse: return baseData;
+            case MechaPartType.Tete: return headModule;
+            case MechaPartType.BrasGauche: return leftArmModule;
+            case MechaPartType.BrasDroit: return rightArmModule;
+            case MechaPartType.JambeGauche: return leftLegModule;
+            case MechaPartType.JambeDroite: return rightLegModule;
+            default: return null;
+        }
+    }
+
+    public void EquipPart(MechaPartType partType, ScriptableObject data)
+    {
+        if (partType == MechaPartType.Torse && data is MechaBaseData bd) 
+        {
+            baseData = bd;
+        }
+        else if (data is ModuleData md)
+        {
+            switch (partType)
+            {
+                case MechaPartType.Tete: headModule = md; break;
+                case MechaPartType.BrasGauche: leftArmModule = md; break;
+                case MechaPartType.BrasDroit: rightArmModule = md; break;
+                case MechaPartType.JambeGauche: leftLegModule = md; break;
+                case MechaPartType.JambeDroite: rightLegModule = md; break;
+            }
+        }
+    }
+
     public void DisplayCalculatedStats()
     {
         var runtimeData = new EntityRuntimeData(BaseData, Modules);
