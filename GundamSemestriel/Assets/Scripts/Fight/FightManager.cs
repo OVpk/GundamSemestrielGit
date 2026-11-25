@@ -5,9 +5,11 @@ using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
 {
+    
     public static event Action OnFMReady; //ETHAN
     
     [SerializeField] private MechaTestProto[] playerMechas = new MechaTestProto[3];
+    public bool manualMode = false;
     [SerializeField] private EnemyData[] enemyDatas = new EnemyData[3];
     
     [SerializeField] private float targetSwitchInterval = 5f;
@@ -28,6 +30,9 @@ public class FightManager : MonoBehaviour
 
     public void InitFight()
     {
+        if (!manualMode && GlobalRuntimeDatas.Instance != null)
+            LoadPlayerDatas();
+        
         InitPlayerTeam();
         InitEnemyTeam();
 
@@ -35,6 +40,22 @@ public class FightManager : MonoBehaviour
         SelectRandomTarget(PlayerTeam, ref currentTargetPlayerIndex);
         
         OnFMReady?.Invoke(); //ETHAN
+    }
+
+    private void LoadPlayerDatas()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            MechaTestProto currentMecha = playerMechas[i];
+            MechaTestProto mechaToLoad = GlobalRuntimeDatas.Instance.mechas[i];
+        
+            currentMecha.EquipPart(MechaPartType.Torse, mechaToLoad.GetEquippedPart(MechaPartType.Torse));
+            currentMecha.EquipPart(MechaPartType.Tete, mechaToLoad.GetEquippedPart(MechaPartType.Tete));
+            currentMecha.EquipPart(MechaPartType.BrasGauche, mechaToLoad.GetEquippedPart(MechaPartType.BrasGauche));
+            currentMecha.EquipPart(MechaPartType.BrasDroit, mechaToLoad.GetEquippedPart(MechaPartType.BrasDroit));
+            currentMecha.EquipPart(MechaPartType.JambeGauche, mechaToLoad.GetEquippedPart(MechaPartType.JambeGauche));
+            currentMecha.EquipPart(MechaPartType.JambeDroite, mechaToLoad.GetEquippedPart(MechaPartType.JambeDroite));
+        }
     }
 
     private void InitPlayerTeam()

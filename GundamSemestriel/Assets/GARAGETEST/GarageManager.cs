@@ -23,6 +23,7 @@ public class GarageManager : MonoBehaviour
     public Transform leftLegAnchor;
     public Transform rightLegAnchor;
 
+    private int currentMechaIndex = 0;
     private MechaPartType currentPartType;
     private List<ScriptableObject> currentValidData = new List<ScriptableObject>();
 
@@ -39,13 +40,46 @@ public class GarageManager : MonoBehaviour
 
         if (currentMecha != null && inventory != null)
         {
-            InitializeDefaultMecha();
+            // InitializeDefaultMecha();
         }
+        
+        if (GlobalRuntimeDatas.Instance != null)
+            LoadMechaFromData(currentMechaIndex);
+            
     }
 
     private void OnDestroy()
     {
         if (carousel != null) carousel.OnItemClicked -= HandleCarouselClick;
+    }
+
+    public void GoBattle()
+    {
+        
+    }
+
+    private void LoadMechaFromData(int index)
+    {
+        MechaTestProto mechaToLoad = GlobalRuntimeDatas.Instance.mechas[index];
+        
+        currentMecha.EquipPart(MechaPartType.Torse, mechaToLoad.GetEquippedPart(MechaPartType.Torse));
+        currentMecha.EquipPart(MechaPartType.Tete, mechaToLoad.GetEquippedPart(MechaPartType.Tete));
+        currentMecha.EquipPart(MechaPartType.BrasGauche, mechaToLoad.GetEquippedPart(MechaPartType.BrasGauche));
+        currentMecha.EquipPart(MechaPartType.BrasDroit, mechaToLoad.GetEquippedPart(MechaPartType.BrasDroit));
+        currentMecha.EquipPart(MechaPartType.JambeGauche, mechaToLoad.GetEquippedPart(MechaPartType.JambeGauche));
+        currentMecha.EquipPart(MechaPartType.JambeDroite, mechaToLoad.GetEquippedPart(MechaPartType.JambeDroite));
+    }
+    
+    private void SaveMechaInData(int index)
+    {
+        MechaTestProto mechaToSave = GlobalRuntimeDatas.Instance.mechas[index];
+        
+        mechaToSave.EquipPart(MechaPartType.Torse, currentMecha.GetEquippedPart(MechaPartType.Torse));
+        mechaToSave.EquipPart(MechaPartType.Tete, currentMecha.GetEquippedPart(MechaPartType.Tete));
+        mechaToSave.EquipPart(MechaPartType.BrasGauche, currentMecha.GetEquippedPart(MechaPartType.BrasGauche));
+        mechaToSave.EquipPart(MechaPartType.BrasDroit, currentMecha.GetEquippedPart(MechaPartType.BrasDroit));
+        mechaToSave.EquipPart(MechaPartType.JambeGauche, currentMecha.GetEquippedPart(MechaPartType.JambeGauche));
+        mechaToSave.EquipPart(MechaPartType.JambeDroite, currentMecha.GetEquippedPart(MechaPartType.JambeDroite));
     }
 
     private void InitializeDefaultMecha()

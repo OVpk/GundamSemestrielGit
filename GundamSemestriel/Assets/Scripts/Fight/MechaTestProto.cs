@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class MechaTestProto : MonoBehaviour
 {
+    [Header("Visuel")]
+    [SerializeField] private MechaVisualAssembler visualAssembler;
+
+    [Header("Base")]
     [SerializeField] private MechaBaseData baseData;
     
     [Header("Modules")]
@@ -38,9 +42,12 @@ public class MechaTestProto : MonoBehaviour
 
     public void EquipPart(MechaPartType partType, ScriptableObject data)
     {
+        GameObject prefabToEquip = null;
+
         if (partType == MechaPartType.Torse && data is MechaBaseData bd) 
         {
             baseData = bd;
+            prefabToEquip = bd.prefab;
         }
         else if (data is ModuleData md)
         {
@@ -52,6 +59,12 @@ public class MechaTestProto : MonoBehaviour
                 case MechaPartType.JambeGauche: leftLegModule = md; break;
                 case MechaPartType.JambeDroite: rightLegModule = md; break;
             }
+            prefabToEquip = md.prefab;
+        }
+
+        if (visualAssembler != null && prefabToEquip != null)
+        {
+            visualAssembler.UpdatePartVisual(partType, prefabToEquip);
         }
     }
 
