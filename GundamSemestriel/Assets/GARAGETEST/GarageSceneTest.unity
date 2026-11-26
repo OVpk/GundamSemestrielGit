@@ -1099,9 +1099,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 340656904}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: OpenMissionMenu
+      - m_Target: {fileID: 802878117}
+        m_TargetAssemblyTypeName: GarageManager, Assembly-CSharp
+        m_MethodName: GoBattle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

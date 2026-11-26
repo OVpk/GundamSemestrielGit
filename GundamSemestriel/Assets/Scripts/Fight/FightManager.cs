@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class FightManager : MonoBehaviour
@@ -233,6 +234,8 @@ public class FightManager : MonoBehaviour
             if (!playerAlive && !enemyAlive) Debug.Log("ÉGALITÉ");
             else if (playerAlive) Debug.Log("VICTOIRE JOUEUR");
             else Debug.Log("DÉFAITE JOUEUR");
+            
+            SceneManager.LoadScene("GarageSceneTest");
         }
     }
 
