@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GarageManager : MonoBehaviour
@@ -55,7 +56,8 @@ public class GarageManager : MonoBehaviour
 
     public void GoBattle()
     {
-        
+        SaveMechaInData(currentMechaIndex);
+        SceneManager.LoadScene("Fight");
     }
 
     private void LoadMechaFromData(int index)

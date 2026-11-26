@@ -19,9 +19,12 @@ public class FightEntity
     
     private readonly List<StatModifier> activeModifiers = new();
 
-    public FightEntity(EntityRuntimeData baseStats)
+    public string Name { get; private set; }
+    
+    public FightEntity(EntityRuntimeData baseStats, string name = "???")
     {
         BaseStats = baseStats;
+        Name = name;
         CurrentHp = BaseStats.Hp;
     }
     
@@ -49,11 +52,11 @@ public class FightEntity
         if (IsDead || target == null || target.IsDead) return;
 
         float rawDamage = Attack;
+        Debug.Log($"[Combat] {Name} attaque {target.Name} (brut : {rawDamage})");
         
         rawDamage *= 245;//ETHAN
-
         int finalDamage = Mathf.RoundToInt(rawDamage);
-
+        
         target.TakeDamage(finalDamage);
     }
 
@@ -62,7 +65,7 @@ public class FightEntity
     public void TakeDamage(int amount)
     {
         //ETHAN
-        int actualDamage = Mathf.RoundToInt(Mathf.Max(0, amount/((6*Def/1)+80)-12.5f)); //replace /1 by /percAr 
+        int actualDamage = Mathf.RoundToInt(Mathf.Max(1, amount/((6*Def/1)+80)-12.5f)); //replace /1 by /percAr 
         
         bool isCrit = Random.Range(0f, 100f) < CritRate;
         if (isCrit)
@@ -71,6 +74,7 @@ public class FightEntity
         }
         //ETHAN
     
+        Debug.Log($"[Combat] {Name} subit {actualDamage} dégâts{(isCrit ? " (CRIT)" : "")} with {Def} def  → PV : {CurrentHp - actualDamage}/{BaseStats.Hp}"); //ETHAN
         CurrentHp = Mathf.Max(0, CurrentHp - actualDamage);
         
         OnDamaged?.Invoke(this, actualDamage, isCrit); //ETHAN
