@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191c20112b5044148ba6f823a2915443, type: 3}
   m_Name: Mod_Arm_R_Tank_1
   m_EditorClassIdentifier: Assembly-CSharp::ModuleData
+  prefab: {fileID: 1930894647385443450, guid: 7cf09ef486b035245b3c8a323fe115e4, type: 3}
   set: {fileID: 11400000, guid: 0aa8ee2476ebe4b4f98728d5ced38513, type: 2}
   <SubStats>k__BackingField:
   - <AdditiveType>k__BackingField: 0

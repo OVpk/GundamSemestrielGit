@@ -18,4 +18,5 @@ MonoBehaviour:
   <Speed>k__BackingField: 20
   <CritRate>k__BackingField: 8
   <CritDamage>k__BackingField: 130
+  prefab: {fileID: 8093008015167711571, guid: 59c31cd7ac49f3f46a99aa0c5038fdbd, type: 3}
   <Set>k__BackingField: {fileID: 11400000, guid: 0aa8ee2476ebe4b4f98728d5ced38513, type: 2}

@@ -1,16 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SwipeCarousel : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    [Header("Configuration des Prefabs 3D")]
+    public event Action<int> OnItemClicked;
+
     public List<GameObject> prefabs; 
 
-    [Header("Conteneur 3D")]
-    [Tooltip("Glissez ici un objet 3D vide. C'est lui qui contiendra les modèles 3D.")]
     public Transform spawnContainer;
+    
+    public Vector3 normalScale = Vector3.one; 
+    public Vector3 hiddenScale = Vector3.zero; 
+
+    public float transitionDuration = 0.4f;
+    public AnimationCurve movementCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    public float minSwipeDistance = 50f;
+    [SerializeField] private bool invertSwipeDirection = false;
 
     [Header("Positions")]
     public Vector3 centerPos = new Vector3(0, 0, -2);
@@ -18,24 +27,14 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Vector3 rightPos = new Vector3(3, 0, 0);
     public Vector3 outLeftPos = new Vector3(-6, 0, 2); 
     public Vector3 outRightPos = new Vector3(6, 0, 2); 
-
-    [Header("Echelles (Fake Fade)")]
-    public Vector3 normalScale = Vector3.one; 
-    public Vector3 hiddenScale = Vector3.zero; 
-
-    [Header("Paramètres d'Animation")]
-    public float transitionDuration = 0.4f;
-    public AnimationCurve movementCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-    [Header("Paramètres de Swipe")]
-    public float minSwipeDistance = 50f;
-    [SerializeField] private bool invertSwipeDirection = false;
     
     private int currentIndex = 0;
     private GameObject currentCenter;
     private GameObject currentLeft;
     private GameObject currentRight;
     private bool isAnimating = false;
+
+    private bool hasBeenInitialized = false; 
 
     private Vector2 startTouchPosition;
     private float startTouchTime;
@@ -44,8 +43,30 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (spawnContainer == null) spawnContainer = this.transform;
         
+        if (hasBeenInitialized) return; 
+
         if (prefabs == null || prefabs.Count == 0) return;
+        
         InitializeCarousel();
+    }
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (isAnimating) return;
+        
+        startTouchPosition = eventData.position;
+        startTouchTime = Time.time;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isAnimating) return;
+
+        float distance = Vector2.Distance(startTouchPosition, eventData.position);
+        if (distance < minSwipeDistance)
+        {
+            OnItemClicked?.Invoke(currentIndex);
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -62,6 +83,7 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         if (isAnimating) return;
+        if (prefabs == null || prefabs.Count <= 1) return;
 
         float swipeDistance = eventData.position.x - startTouchPosition.x;
         float swipeDuration = Time.time - startTouchTime;
@@ -72,25 +94,19 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             if (Mathf.Abs(swipeDistance) >= minSwipeDistance)
             {
-                Debug.Log($"Swipe détecté ! Vitesse : {swipeSpeed} pixels/seconde");
-                
                 bool isSwipingRight = swipeDistance > 0;
                 if (invertSwipeDirection) isSwipingRight = !isSwipingRight;
 
-                if (isSwipingRight)
-                {
-                    SwipeRight();
-                }
-                else
-                {
-                    SwipeLeft();
-                }
+                if (isSwipingRight) SwipeRight();
+                else SwipeLeft();
             }
         }
     }
     
     private void InitializeCarousel()
     {
+        hasBeenInitialized = true; 
+
         currentCenter = SpawnPrefab(currentIndex, centerPos, normalScale);
         currentLeft = SpawnPrefab(GetWrappedIndex(currentIndex - 1), leftPos, normalScale);
         currentRight = SpawnPrefab(GetWrappedIndex(currentIndex + 1), rightPos, normalScale);
@@ -106,13 +122,9 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private GameObject SpawnPrefab(int index, Vector3 localPosition, Vector3 scale)
     {
         GameObject obj = Instantiate(prefabs[index], spawnContainer);
-        
         obj.transform.localPosition = localPosition;
-        
         obj.transform.localRotation = Quaternion.identity;
-        
         obj.transform.localScale = scale;
-        
         return obj;
     }
 
@@ -197,4 +209,68 @@ public class SwipeCarousel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         isAnimating = false;
     }
 
+    public void LoadNewPrefabs(List<GameObject> newPrefabs, Transform newContainer, int startIndex = 0)
+    {
+        hasBeenInitialized = true;
+
+        StopAllCoroutines();
+        isAnimating = false;
+
+        if (newContainer != null)
+        {
+            spawnContainer = newContainer;
+        }
+
+        if (spawnContainer != null)
+        {
+            foreach (Transform child in spawnContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        currentCenter = null;
+        currentLeft = null;
+        currentRight = null;
+
+        prefabs = newPrefabs;
+        
+        currentIndex = startIndex;
+
+        if (prefabs != null && prefabs.Count > 0)
+        {
+            if (prefabs.Count == 1)
+            {
+                currentCenter = SpawnPrefab(currentIndex, centerPos, normalScale);
+            }
+            else if (prefabs.Count == 2)
+            {
+                currentCenter = SpawnPrefab(currentIndex, centerPos, normalScale);
+                currentRight = SpawnPrefab(GetWrappedIndex(currentIndex + 1), rightPos, normalScale);
+                currentLeft = SpawnPrefab(GetWrappedIndex(currentIndex + 1), leftPos, normalScale); 
+            }
+            else
+            {
+                InitializeCarousel();
+            }
+        }
+    }
+    
+    public void ClearCarousel()
+    {
+        StopAllCoroutines();
+        isAnimating = false;
+
+        if (spawnContainer != null)
+        {
+            foreach (Transform child in spawnContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        currentCenter = null;
+        currentLeft = null;
+        currentRight = null;
+    }
 }
