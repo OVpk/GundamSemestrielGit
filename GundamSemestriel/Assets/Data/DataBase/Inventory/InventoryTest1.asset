@@ -17,16 +17,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9814afdbf1c52ed4887e154c52d0797d, type: 2}
   tetes:
   - {fileID: 11400000, guid: 6d2c9ada170df344d8fe7012daa82c26, type: 2}
+  - {fileID: 11400000, guid: 84987a9a9ff55ad4a9ffe92620335c75, type: 2}
   - {fileID: 11400000, guid: f58ed281f263ed34c90bb1660332d774, type: 2}
+  - {fileID: 11400000, guid: 2d137da7579d8c4468c94d1e89d87f3e, type: 2}
   brasGauches:
   - {fileID: 11400000, guid: ba350187bf7fd3949a230407f89ad766, type: 2}
+  - {fileID: 11400000, guid: 2bbf5607bb7895c49b0c1cacb54cbfb4, type: 2}
   - {fileID: 11400000, guid: c453d4dc0de84bd4fb220e5eeabdfdd0, type: 2}
+  - {fileID: 11400000, guid: 608be74339592084fa4e2fd23fe7cd56, type: 2}
   brasDroits:
   - {fileID: 11400000, guid: 51cce564a10311a459e9cd78e461c78a, type: 2}
+  - {fileID: 11400000, guid: f3884859aa573dc4e9c7be1ccde98844, type: 2}
   - {fileID: 11400000, guid: 872cf7e11409fca4db7f0805c7b875aa, type: 2}
+  - {fileID: 11400000, guid: dfc5420b6a2044a4e95720be80f8ff27, type: 2}
   jambesGauches:
   - {fileID: 11400000, guid: 397bdfbf2339e8d4aa54f1cacc3b4b3b, type: 2}
+  - {fileID: 11400000, guid: f0443080a433c7f4788f76c2c2b8053c, type: 2}
   - {fileID: 11400000, guid: dd13247dea8e6bb4a9848a9abd2fcd0a, type: 2}
+  - {fileID: 11400000, guid: 810a3cb2d0b2bc140b89fd1d9a3ed831, type: 2}
   jambesDroites:
   - {fileID: 11400000, guid: 111cead5dc3ccbc4ab6c13eda563ac2a, type: 2}
+  - {fileID: 11400000, guid: 94e31f7dc637efe47a650ead6602b462, type: 2}
   - {fileID: 11400000, guid: ea789ee556e0bbc40a960c5303320076, type: 2}
+  - {fileID: 11400000, guid: 7bca6ab8235de6c4aba4c8518d66baba, type: 2}

@@ -24,32 +24,67 @@ public class MechaInventory : ScriptableObject
     public List<ModuleData> jambesGauches = new List<ModuleData>();
     public List<ModuleData> jambesDroites = new List<ModuleData>();
 
-    public List<GameObject> GetPrefabsByPart(MechaPartType partType)
+    public List<SetData> GetOwnedSetsForPart(MechaPartType partType)
     {
-        List<GameObject> prefabs = new List<GameObject>();
+        List<SetData> ownedSets = new List<SetData>();
 
-        switch (partType)
+        if (partType == MechaPartType.Torse)
         {
-            case MechaPartType.Torse:
-                foreach (var data in torses) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
-            case MechaPartType.Tete:
-                foreach (var data in tetes) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
-            case MechaPartType.BrasGauche:
-                foreach (var data in brasGauches) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
-            case MechaPartType.BrasDroit:
-                foreach (var data in brasDroits) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
-            case MechaPartType.JambeGauche:
-                foreach (var data in jambesGauches) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
-            case MechaPartType.JambeDroite:
-                foreach (var data in jambesDroites) if (data != null && data.prefab != null) prefabs.Add(data.prefab);
-                break;
+            foreach (var data in torses)
+            {
+                if (data != null && data.Set != null && !ownedSets.Contains(data.Set))
+                    ownedSets.Add(data.Set);
+            }
+        }
+        else
+        {
+            List<ModuleData> modules = GetModuleList(partType);
+            foreach (var data in modules)
+            {
+                if (data != null && data.Set != null && !ownedSets.Contains(data.Set))
+                    ownedSets.Add(data.Set);
+            }
         }
 
-        return prefabs;
+        return ownedSets;
+    }
+
+    public List<ScriptableObject> GetItemsByPartAndSet(MechaPartType partType, SetData targetSet)
+    {
+        List<ScriptableObject> results = new List<ScriptableObject>();
+        if (targetSet == null) return results;
+
+        if (partType == MechaPartType.Torse)
+        {
+            foreach (var data in torses)
+            {
+                if (data != null && data.Set == targetSet)
+                    results.Add(data);
+            }
+        }
+        else
+        {
+            List<ModuleData> modules = GetModuleList(partType);
+            foreach (var data in modules)
+            {
+                if (data != null && data.Set == targetSet)
+                    results.Add(data);
+            }
+        }
+
+        return results;
+    }
+
+    private List<ModuleData> GetModuleList(MechaPartType partType)
+    {
+        return partType switch
+        {
+            MechaPartType.Tete => tetes,
+            MechaPartType.BrasGauche => brasGauches,
+            MechaPartType.BrasDroit => brasDroits,
+            MechaPartType.JambeGauche => jambesGauches,
+            MechaPartType.JambeDroite => jambesDroites,
+            _ => new List<ModuleData>()
+        };
     }
 }

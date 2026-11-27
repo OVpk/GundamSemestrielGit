@@ -24,3 +24,9 @@ MonoBehaviour:
       <AdditiveType>k__BackingField: 1
       <StatValue>k__BackingField: 60
       <Stat>k__BackingField: 3
+  headPrefab: {fileID: 7790173863683400795, guid: 4517cbdb7aa52f7459e7788ca9586788, type: 3}
+  torsoPrefab: {fileID: 5797030679254940401, guid: 65f20baf2980a744a9476e39ce667c25, type: 3}
+  leftArmPrefab: {fileID: 2276953509772547264, guid: 0d6eb83b5dd2c5948bde18ae1b2213e2, type: 3}
+  rightArmPrefab: {fileID: 6816246347718494501, guid: 9d115f2cca603eb448f62d18893819a8, type: 3}
+  leftLegPrefab: {fileID: 8910127780135166700, guid: 5d6d0f9616d8eb34da54f0168da72d48, type: 3}
+  rightLegPrefab: {fileID: 2325272015148351405, guid: 4a7c6f2a341855845a72fe4031c2330c, type: 3}

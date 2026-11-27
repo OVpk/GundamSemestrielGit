@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GARAGETEST/GarageSceneTest.unity
+    path: Assets/GARAGE/GarageSceneTest.unity
     guid: dba9ed0e3387dbc4a8d787eb61539669
   - enabled: 1
-    path: Assets/[A RANGER] Ethan_UI/Fight.unity
+    path: Assets/FIGHT/Fight.unity
     guid: fd60eb25e41c46744affe81a93840492
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
