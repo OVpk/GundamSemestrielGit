@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MechaTestProto : MonoBehaviour
@@ -72,6 +73,85 @@ public class MechaTestProto : MonoBehaviour
         {
             visualAssembler.UpdatePartVisual(partType, prefabToEquip);
         }
+    }
+    
+    public int GetEquippedSetCount(SetData targetSet)
+    {
+        if (targetSet == null) return 0;
+
+        int count = 0;
+        if (baseData != null && baseData.Set == targetSet) count++;
+
+        foreach (ModuleData module in Modules)
+        {
+            if (module != null && module.Set == targetSet) count++;
+        }
+
+        return count;
+    }
+    
+    public EntityRuntimeData GetCalculatedStats()
+    {
+        return new EntityRuntimeData(BaseData, Modules);
+    }
+
+    public Dictionary<SetData, int> GetEquippedSetsCounts()
+    {
+        var counts = new Dictionary<SetData, int>();
+
+        if (baseData != null && baseData.Set != null)
+        {
+            counts[baseData.Set] = 1;
+        }
+
+        foreach (ModuleData module in Modules)
+        {
+            if (module == null || module.Set == null) continue;
+
+            if (counts.ContainsKey(module.Set))
+                counts[module.Set]++;
+            else
+                counts[module.Set] = 1;
+        }
+
+        return counts;
+    }
+    
+    public EntityRuntimeData GetSimulatedStats(MechaPartType partType, ScriptableObject candidatePart)
+    {
+        MechaBaseData simBase = baseData;
+        ModuleData simHead = headModule;
+        ModuleData simLeftArm = leftArmModule;
+        ModuleData simRightArm = rightArmModule;
+        ModuleData simLeftLeg = leftLegModule;
+        ModuleData simRightLeg = rightLegModule;
+
+        if (partType == MechaPartType.Torse && candidatePart is MechaBaseData bd)
+        {
+            simBase = bd;
+        }
+        else if (candidatePart is ModuleData md)
+        {
+            switch (partType)
+            {
+                case MechaPartType.Tete: simHead = md; break;
+                case MechaPartType.BrasGauche: simLeftArm = md; break;
+                case MechaPartType.BrasDroit: simRightArm = md; break;
+                case MechaPartType.JambeGauche: simLeftLeg = md; break;
+                case MechaPartType.JambeDroite: simRightLeg = md; break;
+            }
+        }
+
+        ModuleData[] simModules = new ModuleData[]
+        {
+            simHead,
+            simLeftArm,
+            simRightArm,
+            simLeftLeg,
+            simRightLeg
+        };
+
+        return new EntityRuntimeData(simBase, simModules);
     }
 
     public void DisplayCalculatedStats()

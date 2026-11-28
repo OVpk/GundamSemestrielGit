@@ -15,5 +15,6 @@ public struct SubStat
 public struct ConditionnalSubstat
 {
     [field: SerializeField] public int RequiredSetNb { get; private set; }
+    [field: SerializeField] public string Description { get; private set; }
     [field: SerializeField] public SubStat SubStat { get; private set; }
 }

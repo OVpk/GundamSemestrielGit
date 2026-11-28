@@ -19,6 +19,10 @@ public class GarageManager : MonoBehaviour
     [Header("Carousels")]
     public SwipeCarousel setCarousel;
     public SwipeCarousel itemCarousel;
+
+    [Header("UI Popups")]
+    public SetInfoPopupUI setInfoPopup;
+    public ItemInfoPopupUI itemInfoPopup;
     
     public MechaTestProto currentMecha;
     
@@ -48,6 +52,7 @@ public class GarageManager : MonoBehaviour
         if (setCarousel != null)
         {
             setCarousel.OnItemClicked += HandleSetClicked;
+            setCarousel.OnIndexChanged += HandleSetFocused;
             setCarousel.gameObject.SetActive(false);
         }
 
@@ -56,6 +61,16 @@ public class GarageManager : MonoBehaviour
             itemCarousel.OnItemClicked += HandleItemClicked;
             itemCarousel.OnIndexChanged += HandleItemFocused;
             itemCarousel.gameObject.SetActive(false);
+        }
+
+        if (setInfoPopup != null)
+        {
+            setInfoPopup.HideImmediate();
+        }
+        
+        if (itemInfoPopup != null)
+        {
+            itemInfoPopup.HideImmediate();
         }
         
         if (backgroundOverlay != null)
@@ -79,6 +94,7 @@ public class GarageManager : MonoBehaviour
         if (setCarousel != null)
         {
             setCarousel.OnItemClicked -= HandleSetClicked;
+            setCarousel.OnIndexChanged -= HandleSetFocused;
         }
 
         if (itemCarousel != null)
@@ -127,7 +143,7 @@ public class GarageManager : MonoBehaviour
         if (currentMecha.GetEquippedPart(MechaPartType.JambeGauche) == null && inventory.jambesGauches.Count > 0) currentMecha.EquipPart(MechaPartType.JambeGauche, inventory.jambesGauches[0]);
         if (currentMecha.GetEquippedPart(MechaPartType.JambeDroite) == null && inventory.jambesDroites.Count > 0) currentMecha.EquipPart(MechaPartType.JambeDroite, inventory.jambesDroites[0]);
     }
-
+    
     public void SelectBodyPart(MechaPartType partToLoad)
     {
         currentPartType = partToLoad;
@@ -135,7 +151,7 @@ public class GarageManager : MonoBehaviour
 
         if (currentAnchor == null)
         {
-            Debug.LogWarning("Anchor pas assigné !");
+            Debug.LogWarning($"Anchor pas assigné !");
             return;
         }
 
@@ -144,6 +160,8 @@ public class GarageManager : MonoBehaviour
 
     private void OpenSetCarousel()
     {
+        if (itemInfoPopup != null) itemInfoPopup.Hide();
+        
         List<SetData> rawOwnedSets = inventory.GetOwnedSetsForPart(currentPartType);
         currentOwnedSets.Clear();
         List<GameObject> setPrefabs = new List<GameObject>();
@@ -179,7 +197,21 @@ public class GarageManager : MonoBehaviour
 
         FadeOverlayTo(maxAlpha);
     }
-    
+
+    private void HandleSetFocused(int setIndex)
+    {
+        if (setInfoPopup == null) return;
+        if (setIndex < 0 || setIndex >= currentOwnedSets.Count) return;
+
+        SetData focusedSet = currentOwnedSets[setIndex];
+        int currentCount = currentMecha.GetEquippedSetCount(focusedSet);
+
+        SetData equippedSlotSet = GetSetFromData(currentMecha.GetEquippedPart(currentPartType));
+        int projectedCount = (equippedSlotSet == focusedSet) ? currentCount : currentCount + 1;
+
+        setInfoPopup.ShowOrRefresh(focusedSet, currentCount, projectedCount);
+    }
+
     private void HandleSetClicked(int setIndex)
     {
         SetData selectedSet = currentOwnedSets[setIndex];
@@ -204,6 +236,8 @@ public class GarageManager : MonoBehaviour
 
         currentStep = GarageStep.ItemSelection;
 
+        if (setInfoPopup != null) setInfoPopup.Hide();
+
         setCarousel.ClearCarousel();
         setCarousel.gameObject.SetActive(false);
 
@@ -213,17 +247,23 @@ public class GarageManager : MonoBehaviour
 
     private void HandleItemFocused(int itemIndex)
     {
+        if (itemInfoPopup == null) return;
         if (itemIndex < 0 || itemIndex >= currentFilteredItems.Count) return;
 
         ScriptableObject focusedItem = currentFilteredItems[itemIndex];
-        Debug.Log($"[Carousel Vertical] Exemplaire centré ({itemIndex + 1}/{currentFilteredItems.Count}) : {focusedItem.name}");
+        EntityRuntimeData currentStats = currentMecha.GetCalculatedStats();
+        EntityRuntimeData simulatedStats = currentMecha.GetSimulatedStats(currentPartType, focusedItem);
+
+        itemInfoPopup.ShowOrRefresh(currentStats, simulatedStats, focusedItem);
     }
-    
+
     private void HandleItemClicked(int itemIndex)
     {
         ScriptableObject selectedData = currentFilteredItems[itemIndex];
-        
+    
         currentMecha.EquipPart(currentPartType, selectedData);
+
+        if (itemInfoPopup != null) itemInfoPopup.Hide();
 
         itemCarousel.ClearCarousel();
         itemCarousel.gameObject.SetActive(false);
@@ -231,7 +271,7 @@ public class GarageManager : MonoBehaviour
 
         currentStep = GarageStep.BodyPartSelection;
         FadeOverlayTo(0f);
-        
+    
         currentMecha.DisplayCalculatedStats();
     }
 
@@ -243,6 +283,8 @@ public class GarageManager : MonoBehaviour
         }
         else if (currentStep == GarageStep.SetSelection)
         {
+            if (setInfoPopup != null) setInfoPopup.Hide();
+
             setCarousel.ClearCarousel();
             setCarousel.gameObject.SetActive(false);
             uiBodyPart.SetActive(true);

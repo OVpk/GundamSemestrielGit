@@ -12,15 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007135d220817f7458abef9715851520, type: 3}
   m_Name: Set_Offensif
   m_EditorClassIdentifier: Assembly-CSharp::SetData
-  <Set>k__BackingField: 1
+  <SetName>k__BackingField: Set Offensif
   <SetBonus>k__BackingField:
   - <RequiredSetNb>k__BackingField: 2
+    <Description>k__BackingField: Description Test Palier 1
     <SubStat>k__BackingField:
       <AdditiveType>k__BackingField: 0
       <StatValue>k__BackingField: 20
       <Stat>k__BackingField: 1
   - <RequiredSetNb>k__BackingField: 3
+    <Description>k__BackingField: Description Test Palier 1
     <SubStat>k__BackingField:
       <AdditiveType>k__BackingField: 0
       <StatValue>k__BackingField: 30
       <Stat>k__BackingField: 1
+  headPrefab: {fileID: 0}
+  torsoPrefab: {fileID: 0}
+  leftArmPrefab: {fileID: 0}
+  rightArmPrefab: {fileID: 0}
+  leftLegPrefab: {fileID: 0}
+  rightLegPrefab: {fileID: 0}

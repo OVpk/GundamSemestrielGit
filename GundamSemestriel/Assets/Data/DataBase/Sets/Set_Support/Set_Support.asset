@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007135d220817f7458abef9715851520, type: 3}
   m_Name: Set_Support
   m_EditorClassIdentifier: Assembly-CSharp::SetData
-  <Set>k__BackingField: 2
+  <SetName>k__BackingField: Set Support
   <SetBonus>k__BackingField:
   - <RequiredSetNb>k__BackingField: 3
+    <Description>k__BackingField: Description Test Palier 1
     <SubStat>k__BackingField:
       <AdditiveType>k__BackingField: 1
       <StatValue>k__BackingField: 40
       <Stat>k__BackingField: 3
   - <RequiredSetNb>k__BackingField: 4
+    <Description>k__BackingField: Description Test Palier 1
     <SubStat>k__BackingField:
       <AdditiveType>k__BackingField: 1
       <StatValue>k__BackingField: 60
